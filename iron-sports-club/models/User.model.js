@@ -1,6 +1,6 @@
 const { Schema, model, default: mongoose } = require("mongoose");
 
-const studentSchema = new Schema(
+const userSchema = new Schema(
     {
       fullName: {
         type: String,
@@ -19,15 +19,21 @@ const studentSchema = new Schema(
         type: String,
         required: true
       },
-      bookedClasses: [{ type: Schema.Types.ObjectId, ref: "Class" }]
+      role: {
+        type: String,
+        required: true,
+        enum: ["Instructor", "Student"]
+      },
+
+      classes: [{ type: Schema.Types.ObjectId, ref: "Class" }]
     },
     {
       // this second object adds extra properties: `createdAt` and `updatedAt`
       timestamps: true
     }
   );
-  const Student = model("Student", studentSchema);
-  module.exports = Student;
+  const User = model("User", userSchema);
+  module.exports = User;
   
   
   
