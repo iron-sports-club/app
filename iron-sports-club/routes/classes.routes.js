@@ -1,6 +1,53 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
+const Class = require("../models/Class.model");
+
+router.get("/classes/list", (req, res) => {
+  Class.find()
+    .then((classes) => {
+      console.log("classes from DB: ", { classes });
+      res.render("classes/list", { classes });
+    })
+
+    .catch((err) => console.log(err));
+});
+
+router.get("/classes/create-class", (req, res) => {
+  res.render("classes/create-class");
+});
+
+router.post("/classes/create-class", (req, res) => {
+  const { className, duration, date, timeOfDay, description } = req.body;
+  Class.create({ className, duration, date, timeOfDay, description })
+    .then(() => res.redirect("/classes/list"))
+    .catch((err) => console.log(err));
+});
+
+router.get("/classes/:id/edit-class", (req, res) => {
+  const { id } = req.params;
+  console.log(req.params);
+  Class.findById(id)
+    .then((foundClass) => {
+      res.render("classes/edit-class", foundClass);
+    })
+    .catch((err) => console.log(err));
+});
+
+router.post("/classes/:id/edit-class", (req, res) => {
+  const { className, duration, date, timeOfDay, description } = req.body;
+  const { id } = req.params;  
+  console.log("Parameeters: ",req.params);
+  Class.findByIdAndUpdate(id, { className, duration, date, timeOfDay, description })
+    .then(() => res.redirect("/classes/list"))
+    .catch((err) => console.log(err));
+});
 
 
-
+router.post('/classes/:id/delete', (req, res, next) => {
+    const { id } = req.params;
+  
+    Class.findByIdAndDelete(id)
+        .then(() => res.redirect('/classes/list'))
+        .catch(err => console.log(err))
+  });
 module.exports = router;
