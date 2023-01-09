@@ -1,0 +1,12 @@
+<h1>Edit class Page</h1>
+
+<form action="/classes/{{id}}/edit-class" method="post">
+    
+    <input type="text" name="className" value={{className}} required>
+    <input type="number" name="duration" value={{duration}} required>
+    <input type="date" name="date" value={{date}} required>
+    <input type="time" name="timeOfDay" value={{timeOfDay}} required>
+    <input type="text" name="description" value={{description}} required>
+    {{!-- <input type="hidden" name="userId" value="{{id}}"> this is to refer to the owner ID --}}
+    <button type="submit">Edit Class</button>
+</form>
