@@ -5,9 +5,11 @@ const router = express.Router()
 const User = require("../models/User.model")
 const saltRounds = 10
 
+const {isLoggedIn, isLoggedOut, isStudent, isInstructor} = require("../middleware/route-guard");
+
 
 // GET Signup
-router.get("/auth/signup", (req, res) => {
+router.get("/auth/signup", isLoggedOut, (req, res, next) => {
     res.render("auth/signup")
 })
 
@@ -36,7 +38,7 @@ router.post("/auth/signup", async (req, res) => {
 
 
 // GET Login
-router.get("/auth/login", (req, res) => {
+router.get("/auth/login", isLoggedOut, (req, res, next) => {
     res.render("auth/login")
 })
 
@@ -78,7 +80,7 @@ router.post("/auth/login", (req, res) => {
 
 
 // GET Profile
-router.get("/auth/profile", (req, res) => {
+router.get("/auth/profile", isLoggedIn, isStudent, (req, res, next) => {
     // const { currentUser } = req.session
     console.log("CURRENT USER ===>", req.session.currentUser)
     res.render("auth/profile", req.session.currentUser)
@@ -86,7 +88,7 @@ router.get("/auth/profile", (req, res) => {
 
 
 //POST Logout
-router.post("/logout", (req, res) => {
+router.post("/logout", isLoggedIn, (req, res, next) => {
     req.session.destroy(err => {
         if (err) console.log(err);
         res.redirect('/');
