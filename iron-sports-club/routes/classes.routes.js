@@ -20,7 +20,8 @@ router.get("/classes/create-class", isInstructor,  (req, res, next) => {
 
 router.post("/classes/create-class", (req, res) => {
   const { className, duration, date, timeOfDay, description } = req.body;
-  Class.create({ className, duration, date, timeOfDay, description })
+  const owner = req.session.currentUser._id
+  Class.create({ className, duration, date, timeOfDay, description, owner })
     .then(() => res.redirect("/classes/list"))
     .catch((err) => console.log(err));
 });
