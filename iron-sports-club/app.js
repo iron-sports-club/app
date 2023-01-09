@@ -29,10 +29,10 @@ const indexRoutes = require("./routes/index.routes");
 app.use("/", indexRoutes);
 
 const classesRoutes = require("./routes/classes.routes");
-app.use("/classes", classesRoutes);
+app.use("/", classesRoutes);
 
 const authRoutes = require("./routes/auth.routes");
-app.use("/auth", authRoutes);
+app.use("/", authRoutes);
 
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes

@@ -1,19 +1,19 @@
 const bcrypt = require("bcrypt")
 const express = require("express")
-const router = express.router()
+const router = express.Router()
 
 const User = require("../models/User.model")
 const saltRounds = 10
 
 
 // GET Signup
-router.get("/signup" (req, res) => {
+router.get("/auth/signup", (req, res) => {
     res.render("auth/signup")
 })
 
 
 // POST Signup
-router.post("/signup", async (req, res) => {
+router.post("/auth/signup", async (req, res) => {
     const { fullName, email, password, role } = req.body
     console.log("REQ.BODY ===>", req.body)
 
@@ -30,3 +30,5 @@ router.post("/signup", async (req, res) => {
         .then(newUser => res.redirect("/auth/profile", newUser)) //sending info of newUser
         .catch(err => console.log(err))
 })
+
+module.exports = router;
