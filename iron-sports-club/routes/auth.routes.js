@@ -80,11 +80,21 @@ router.post("/auth/login", (req, res) => {
 
 
 // GET Profile
-router.get("/auth/profile", isLoggedIn, isStudent, (req, res, next) => {
-    // const { currentUser } = req.session
-    console.log("CURRENT USER ===>", req.session.currentUser)
-    res.render("auth/profile", req.session.currentUser)
-})
+// router.get("/auth/profile", isLoggedIn, (req, res, next) => {
+//     console.log("CURRENT USER ROLE ===>", req.session.currentUser.role)
+
+//     console.log("CURRENT USER ===>", req.session.currentUser)
+//     res.render("auth/profile", req.session.currentUser)
+// })
+
+router.get("/auth/profile", isLoggedIn, (req, res, next) => {
+    if(req.session.currentUser.role === "Instructor"){
+    res.render("auth/profile", {isInstructor: true, fullName: req.session.currentUser.fullName, classes: req.session.currentUser.classes, role: req.session.currentUser.role}) //req.session.currentUser, 
+    } else {
+    res.render("auth/profile", {isInstructor: false, fullName: req.session.currentUser.fullName, classes: req.session.currentUser.classes, role: req.session.currentUser.role})
+}
+    
+    })
 
 
 //POST Logout
