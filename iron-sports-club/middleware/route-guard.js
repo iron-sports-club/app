@@ -1,0 +1,7 @@
+//isLoggedin
+
+//isLoggedOut
+
+//isInstructor
+
+//isStudent

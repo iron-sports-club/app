@@ -1,0 +1,17 @@
+<h1>Signup Page</h1>
+
+<form action="/auth/signup" method="post">
+    <input type="text" name="fullName" placeholder="Enter your full name..." required>
+    <input type="email" name="email" placeholder="Enter your email..." required>
+    <input type="password" name="password" placeholder="Enter your password..." required>
+    <label for="role">Choose a role:</label>
+        <select name="role" id="role">
+        <option value="instructor">Instructor</option>
+        <option value="student">Student</option>
+        </select>
+    <button type="submit">Create User</button>
+</form>
+
+{{#if errorMessage}}
+    <p class="error">{{errorMessage}}</p>
+  {{/if}}
