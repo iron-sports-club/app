@@ -6,24 +6,24 @@
     <a href="/classes/list">Browse classes</a>
 </button>
 
-{{#if isInstructor}}
+{{!-- {{#if isInstructor}} --}}
 <button>
-    <a href="/classes/create">Create new class</a>
+    <a href="/classes/create-class">Create new class</a>
 </button>
-{{/if}}
+{{!-- {{/if}} --}}
 
 {{!-- change title based on user role --}}
-{{#if isInstructor}}
+{{!-- {{#if isInstructor}} --}}
     <h2>
         Your created classes
     </h2>
-{{/if}}
+{{!-- {{/if}} --}}
 
-{{#if isStudent}}
+{{!-- {{#if isStudent}} --}}
     <h2>
         Your booked classes
     </h2>
-{{/if}}
+{{!-- {{/if}} --}}
 
 {{!-- Displaying all classes for both Instructor and Student user role --}}
 {{#each classes}} 
