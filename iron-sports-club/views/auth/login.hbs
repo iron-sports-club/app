@@ -1,1 +1,11 @@
-Hello
+<h1>Signup Page</h1>
+
+<form action="/auth/login" method="post">
+    <input type="text" name="email" placeholder="Enter your emial..." required>
+    <input type="password" name="password" placeholder="Enter your password..." required>
+    <button type="submit">Login</button>
+</form>
+
+{{#if errorMessage}}
+    <p class="error">{{errorMessage}}</p>
+  {{/if}}
