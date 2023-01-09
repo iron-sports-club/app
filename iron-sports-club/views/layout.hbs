@@ -9,10 +9,21 @@
   </head>
 
   <body>
-    
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/classes/list">Classes</a></li>
+      <li><a href="/auth/signup">Signup</a></li>
+      <li><a href="/auth/login">Login</a></li>
+      <li>
+        <form action="/auth/logout" method="post">
+          <button type="submit">Logout</button>
+        </form>
+      </li>
+    </ul>
     {{{body}}}
 
     <script src="/js/script.js"></script>
+
   </body>
 
 </html>
