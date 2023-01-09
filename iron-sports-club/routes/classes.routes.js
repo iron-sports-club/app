@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Class = require("../models/Class.model");
 
+const {isStudent, isInstructor} = require("../middleware/route-guard");
+
 router.get("/classes/list", (req, res) => {
   Class.find()
     .then((classes) => {
@@ -12,7 +14,7 @@ router.get("/classes/list", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/classes/create-class", (req, res) => {
+router.get("/classes/create-class", isInstructor,  (req, res, next) => {
   res.render("classes/create-class");
 });
 
@@ -23,7 +25,7 @@ router.post("/classes/create-class", (req, res) => {
     .catch((err) => console.log(err));
 });
 
-router.get("/classes/:id/edit-class", (req, res) => {
+router.get("/classes/:id/edit-class", isInstructor, (req, res, next) => {
   const { id } = req.params;
   console.log(req.params);
   Class.findById(id)
@@ -43,7 +45,7 @@ router.post("/classes/:id/edit-class", (req, res) => {
 });
 
 
-router.post('/classes/:id/delete', (req, res, next) => {
+router.post('/classes/:id/delete', isInstructor, (req, res, next) => {
     const { id } = req.params;
   
     Class.findByIdAndDelete(id)
