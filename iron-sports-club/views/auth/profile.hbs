@@ -1,0 +1,38 @@
+<h1>Profile</h1>
+
+<h1>Hey {{fullName}}</h1>
+
+<button>
+    <a href="/classes/list">Browse classes</a>
+</button>
+
+{{#if isInstructor}}
+<button>
+    <a href="/classes/create">Create new class</a>
+</button>
+{{/if}}
+
+{{!-- change title based on user role --}}
+{{#if isInstructor}}
+    <h2>
+        Your created classes
+    </h2>
+{{/if}}
+
+{{#if isStudent}}
+    <h2>
+        Your booked classes
+    </h2>
+{{/if}}
+
+{{!-- Displaying all classes for both Instructor and Student user role --}}
+{{#each classes}} 
+{{!-- these need to be the classes that are associated with that user! --}}
+<div>
+    <h3>{{this.className}}</h3>
+    <p>{{this.description}}</p>
+    <button>
+        <a href="/classes/{{_id}}">See class details</a>
+    </button>
+</div>
+{{/each}}
