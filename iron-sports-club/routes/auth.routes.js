@@ -88,10 +88,12 @@ router.post("/auth/login", (req, res) => {
 // })
 
 router.get("/auth/profile", isLoggedIn, (req, res, next) => {
+    const {fullName, role, classes} = req.session.currentUser
     if(req.session.currentUser.role === "Instructor"){
-    res.render("auth/profile", {isInstructor: true, fullName: req.session.currentUser.fullName, classes: req.session.currentUser.classes, role: req.session.currentUser.role}) //req.session.currentUser, 
+    res.render("auth/profile", {isInstructor: true, fullName, classes, role}) //req.session.currentUser, 
     } else {
-    res.render("auth/profile", {isInstructor: false, fullName: req.session.currentUser.fullName, classes: req.session.currentUser.classes, role: req.session.currentUser.role})
+    res.render("auth/profile", {isInstructor: false, fullName, classes, role})
+
 }
     
     })
