@@ -18,11 +18,11 @@ router.get("/classes/list", (req, res) => {
 
 router.get("/classes/:id/class-details", (req, res, next) => {
   const { id } = req.params;
-  console.log("params from class details: ", req.params);
+  console.log("params from class details: ", id);
   if(req.session.currentUser.role === "Instructor"){
   Class.findById(id)
     .then((foundClass) => {
-      res.render("classes/class-details", {isInstructor: true, foundClass});
+        res.render("classes/class-details", {isInstructor: true, foundClass});
       console.log("foundclass from class details: ", foundClass);
     })
     .catch((err) => console.log(err));
@@ -31,7 +31,7 @@ router.get("/classes/:id/class-details", (req, res, next) => {
     Class.findById(id)
     .then((foundClass) => {
       res.render("classes/class-details", {isInstructor: false, foundClass});
-      console.log("foundclass from class details: ", foundClass);
+      console.log("foundclass from class details: ", foundClass._id.toString());
     })
     .catch((err) => console.log(err));
 
@@ -91,41 +91,70 @@ router.post('/classes/:id/delete', isInstructor, (req, res, next) => {
 
     Class.findById(id)
         .then((foundClass) => {
-            const classIndex = req.session.currentUser.classes.indexOf(foundclass._id)
-            req.session.currentUser.classes.splice(classIndex, 1)
+            User.findById(req.session.currentUser._id)
+                .then((currentUser) => {
+                    const classIndex= currentUser.classes.indexOf(foundClass._id)
+                    currentUser.classes.splice(classIndex._id, 1)
+                    currentUser.save()
+                    
+                })
+                // .then(() => res.redirect('/classes/list'))
+                .catch(err => console.log(err))
         })
-  
-    Class.findByIdAndDelete(id)
+        Class.findByIdAndDelete(id)
         .then(() => res.redirect('/classes/list'))
-        .catch(err => console.log(err))
+
+
+    // Class.findById(id)
+    //     .then((foundClass) => {
+    //         const classIndex = req.session.currentUser.classes.indexOf(foundclass._id)
+    //         req.session.currentUser.classes.splice(classIndex, 1)  //here the user needs to be found to change DB entry
+    //     })
+  
+    // Class.findByIdAndDelete(id)
+    //     .then(() => res.redirect('/classes/list'))
+    //     .catch(err => console.log(err))
   });
 
 router.post("/classes/:id/book-class", isStudent, (req, res, next) => {
-    const { classId } = req.params
-console.log("classId from book class: ", classId);
-Class.findById(classId)
+    const { id } = req.params
+console.log("classId from book class: ", id);
+Class.findById(id)
     .then((foundClass) => {
         foundClass.attendees.push(req.session.currentUser._id)
         foundClass.save()
-        req.session.currentUser.classes.push(foundClass._id)
+        User.findById(req.session.currentUser._id)
+            .then((currentUser) => {
+                currentUser.classes.push(foundClass._id)
+                currentUser.save()
+            })
     })
-    .then(res.redirect(`/classes/${classId}`))
+    .then(res.redirect(`/classes/${id}/class-details`))
     .catch(err => console.log(err))
 })
 
 router.post("/classes/:id/cancel-class", isStudent, (req, res, next) => {
 
-    classId = req.params
+    const {id} = req.params
 
-    Class.findById(classId)
+    Class.findById(id)
         .then((foundClass) => {
             const attendeeIndex = foundClass.attendees.indexOf(req.session.currentUser._id)
+            console.log("ATTENDEE INDEX", attendeeIndex)
             foundClass.attendees.splice(attendeeIndex, 1)
+            foundClass.save()
             
-            const bookedClassIndex = req.session.currentUser.classes.indexOf(foundClass._id)
-            req.session.currentUser.classes.splice(bookedClassIndex, 1)
+            User.findById(req.session.currentUser._id)
+                .then((currentUser) => {
+                    const classIndex= currentUser.classes.indexOf(foundClass._id)
+                    currentUser.classes.splice(classIndex._id, 1)
+                    currentUser.save()
+                })
+
+            // const bookedClassIndex = req.session.currentUser.classes.indexOf(foundClass._id) //here the user needs to be found to change DB entry
+            // req.session.currentUser.classes.splice(bookedClassIndex, 1)
         })
-        .then(res.redirect(`/classes/${classId}`))
+        .then(res.redirect(`/classes/${id}/class-details`))
     .catch(err => console.log(err))
 })
 
