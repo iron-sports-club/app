@@ -99,6 +99,7 @@ User.findOne({ fullName })
         .populate("classes")
         .then( foundUser => {
             console.log("user:", foundUser)
+            console.log("user's classes:", foundUser.classes)
             res.render("auth/profile", {isInstructor: true, foundUser})
         })
         .catch(error => console.log(error))

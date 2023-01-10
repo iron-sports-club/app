@@ -16,6 +16,23 @@ router.get("/classes/list", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.get("/classes/:id/class-details", (req, res, next) => {
+  const { id } = req.params;
+  console.log(req.params);
+  if(req.session.currentUser.role === "Instructor"){
+  Class.findById(id)
+    .then((foundClass) => {
+      res.render("classes/class-details", {isInstructor: true, foundClass});
+      console.log("foundclass from class details: ", foundClass);
+    })
+    .catch((err) => console.log(err));
+  }
+  else {
+    res.render("classes/class-details", {isInstructor: false, foundClass});
+
+  }
+});
+
 router.get("/classes/create-class", isInstructor,  (req, res, next) => {
   res.render("classes/create-class");
 });
@@ -39,7 +56,7 @@ Class.create({ className, duration, date, timeOfDay, description, owner: ownerId
     })
     .catch(err => console.log(err))
 })
-.then(() => res.redirect("/classes/list"), newClass)
+.then(() => res.redirect("/classes/list"))
         .catch(err => console.log(err));
 });
 
