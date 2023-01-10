@@ -9,10 +9,10 @@
 </form>
 
 {{else}}
-    <form action="/classes/:id/cancel-class" method="post">
+    <form action="/classes/{{id}}/cancel-class" method="post">
         <button type="submit">Cancel Class</button>
 </form>
-      <form action="/classes/:id/book-class" method="post">
+      <form action="/classes/{{id}}/book-class" method="post">
         <button type="submit">Book Class</button>
       </form>
 

@@ -1,7 +1,7 @@
 {{#each classes}}
 <p>{{className}}</p>
-<a href="/classes/{{id}}/edit-class"><button>Edit</button></a>
-<form action="/classes/{{id}}/delete" method="post">
-    <button type="submit">Delete</button>
-</form>
+<button>       
+     <a href="/classes/{{_id}}/class-details">See class details</a>
+</button>
+
 {{/each}}
