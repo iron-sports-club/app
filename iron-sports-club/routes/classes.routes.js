@@ -22,12 +22,19 @@ router.get("/classes/:id/class-details", (req, res, next) => {
   if(req.session.currentUser.role === "Instructor"){
   Class.findById(id)
     .then((foundClass) => {
-        res.render("classes/class-details", {isInstructor: true, foundClass});
+        console.log("Found class: ", foundClass);
+        console.log("Owner of found class", foundClass.owner.toString());
+        console.log("Current user id: ",req.session.currentUser._id);
+        if (foundClass.owner.toString() === req.session.currentUser._id) {
+          res.render("classes/class-details", {isInstructor: true, foundClass, isOwner: true});
+        } else {
+          res.render("classes/class-details", {isInstructor: true, foundClass});
+        } 
       console.log("foundclass from class details: ", foundClass);
     })
     .catch((err) => console.log(err));
   }
-  else {
+  else { //check if currentUser trying to cancel/book is the person who signed up for the class
     Class.findById(id)
     .then((foundClass) => {
       res.render("classes/class-details", {isInstructor: false, foundClass});
