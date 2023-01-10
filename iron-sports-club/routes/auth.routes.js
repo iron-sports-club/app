@@ -30,7 +30,7 @@ router.post("/auth/signup", async (req, res) => {
 
     User.create({ fullName, email, password: passwordHash, role })
         .then((newUser) => {            
-            req.session.currentUser = {fullName: newUser.fullName, role: newUser.role, classes: newUser.classes}
+            req.session.currentUser = {fullName: newUser.fullName, role: newUser.role, classes: newUser.classes, _id: newUser._id}
             res.redirect("/auth/profile")
         })
         .catch(err => console.log(err))
@@ -66,7 +66,7 @@ router.post("/auth/login", (req, res) => {
 
 //If email and password match                
             } else if (bcrypt.compareSync(password, user.password))  {
-                req.session.currentUser = {fullName: user.fullName, role: user.role, classes: user.classes}
+                req.session.currentUser = {fullName: user.fullName, role: user.role, classes: user.classes, _id: user._id}
                 res.redirect("/auth/profile")
 
 //If email matches, but password does not                
@@ -89,6 +89,7 @@ router.post("/auth/login", (req, res) => {
 
 router.get("/auth/profile", isLoggedIn, (req, res, next) => {
     const {fullName, role, classes} = req.session.currentUser
+    console.log(req.session.currentUser.classes)
     if(req.session.currentUser.role === "Instructor"){
     res.render("auth/profile", {isInstructor: true, fullName, classes, role}) //req.session.currentUser, 
     } else {
