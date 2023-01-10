@@ -92,8 +92,6 @@ router.get("/auth/profile", isLoggedIn, (req, res, next) => {
     console.log(req.session.currentUser.classes)
     if(req.session.currentUser.role === "Instructor"){
 
-// User.findById(req.session.currentUser._id)
-//         .then
 
 User.findOne({ fullName })
         .populate("classes")
@@ -103,11 +101,15 @@ User.findOne({ fullName })
             res.render("auth/profile", {isInstructor: true, foundUser})
         })
         .catch(error => console.log(error))
-
-    // res.render("auth/profile", {isInstructor: true, fullName, classes, role}) //req.session.currentUser,
 } else {
-    res.render("auth/profile", {isInstructor: false, fullName, classes, role})
-
+    // res.render("auth/profile", {isInstructor: false, fullName, classes, role})
+    User.findOne({ fullName })
+    .populate("classes")
+    .then( foundUser => {
+        console.log("user:", foundUser)
+        res.render("auth/profile", {isInstructor: false, foundUser})
+    })
+    .catch(error => console.log(error))
 }
     
     })
