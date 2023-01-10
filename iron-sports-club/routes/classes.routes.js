@@ -26,8 +26,15 @@ router.post("/classes/create-class", (req, res) => {
   const ownerId = req.session.currentUser._id
   Class.create({ className, duration, date, timeOfDay, description, owner: ownerId }) 
   .then(createdClass => {
-    return User.findByIdAndUpdate(req.session.currentUser._id, { $push: {classes: createdClass._id}}); // 
+    User.findById(ownerId)
+      .then(owner => {
+        owner.classes.push(createdClass._id);
+        owner.save();
+      })
+      .catch(err => console.log(err))
     })
+    // return User.findByIdAndUpdate(req.session.currentUser._id, { $push: {classes: createdClass._id}}); // 
+    // })
     .then(() => res.redirect("/classes/list"))
     .catch((err) => console.log(err));
 });
