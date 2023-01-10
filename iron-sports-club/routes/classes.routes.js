@@ -16,6 +16,29 @@ router.get("/classes/list", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.get("/classes/:id/class-details", (req, res, next) => {
+  const { id } = req.params;
+  console.log("params from class details: ", req.params);
+  if(req.session.currentUser.role === "Instructor"){
+  Class.findById(id)
+    .then((foundClass) => {
+      res.render("classes/class-details", {isInstructor: true, foundClass});
+      console.log("foundclass from class details: ", foundClass);
+    })
+    .catch((err) => console.log(err));
+  }
+  else {
+    Class.findById(id)
+    .then((foundClass) => {
+      res.render("classes/class-details", {isInstructor: false, foundClass});
+      console.log("foundclass from class details: ", foundClass);
+    })
+    .catch((err) => console.log(err));
+
+
+  }
+});
+
 router.get("/classes/create-class", isInstructor,  (req, res, next) => {
   res.render("classes/create-class");
 });
@@ -77,9 +100,9 @@ router.post('/classes/:id/delete', isInstructor, (req, res, next) => {
         .catch(err => console.log(err))
   });
 
-router.get("/classes/:id/book-class", isStudent, (req, res, next) => {
-    const classId = req.params
-
+router.post("/classes/:id/book-class", isStudent, (req, res, next) => {
+    const { classId } = req.params
+console.log("classId from book class: ", classId);
 Class.findById(classId)
     .then((foundClass) => {
         foundClass.attendees.push(req.session.currentUser._id)
@@ -90,7 +113,7 @@ Class.findById(classId)
     .catch(err => console.log(err))
 })
 
-router.get("/classes/:id/cancel-class", isStudent, (req, res, next) => {
+router.post("/classes/:id/cancel-class", isStudent, (req, res, next) => {
 
     classId = req.params
 
