@@ -16,6 +16,29 @@ router.get("/classes/list", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+router.get("/classes/:id/class-details", (req, res, next) => {
+  const { id } = req.params;
+  console.log("params from class details: ", req.params);
+  if(req.session.currentUser.role === "Instructor"){
+  Class.findById(id)
+    .then((foundClass) => {
+      res.render("classes/class-details", {isInstructor: true, foundClass});
+      console.log("foundclass from class details: ", foundClass);
+    })
+    .catch((err) => console.log(err));
+  }
+  else {
+    Class.findById(id)
+    .then((foundClass) => {
+      res.render("classes/class-details", {isInstructor: false, foundClass});
+      console.log("foundclass from class details: ", foundClass);
+    })
+    .catch((err) => console.log(err));
+
+
+  }
+});
+
 router.get("/classes/create-class", isInstructor,  (req, res, next) => {
   res.render("classes/create-class");
 });
@@ -39,7 +62,7 @@ Class.create({ className, duration, date, timeOfDay, description, owner: ownerId
     })
     .catch(err => console.log(err))
 })
-.then(() => res.redirect("/classes/list"), newClass)
+.then(() => res.redirect("/classes/list"))
         .catch(err => console.log(err));
 });
 
@@ -65,9 +88,45 @@ router.post("/classes/:id/edit-class", (req, res) => {
 
 router.post('/classes/:id/delete', isInstructor, (req, res, next) => {
     const { id } = req.params;
+
+    Class.findById(id)
+        .then((foundClass) => {
+            const classIndex = req.session.currentUser.classes.indexOf(foundclass._id)
+            req.session.currentUser.classes.splice(classIndex, 1)
+        })
   
     Class.findByIdAndDelete(id)
         .then(() => res.redirect('/classes/list'))
         .catch(err => console.log(err))
   });
+
+router.post("/classes/:id/book-class", isStudent, (req, res, next) => {
+    const { classId } = req.params
+console.log("classId from book class: ", classId);
+Class.findById(classId)
+    .then((foundClass) => {
+        foundClass.attendees.push(req.session.currentUser._id)
+        foundClass.save()
+        req.session.currentUser.classes.push(foundClass._id)
+    })
+    .then(res.redirect(`/classes/${classId}`))
+    .catch(err => console.log(err))
+})
+
+router.post("/classes/:id/cancel-class", isStudent, (req, res, next) => {
+
+    classId = req.params
+
+    Class.findById(classId)
+        .then((foundClass) => {
+            const attendeeIndex = foundClass.attendees.indexOf(req.session.currentUser._id)
+            foundClass.attendees.splice(attendeeIndex, 1)
+            
+            const bookedClassIndex = req.session.currentUser.classes.indexOf(foundClass._id)
+            req.session.currentUser.classes.splice(bookedClassIndex, 1)
+        })
+        .then(res.redirect(`/classes/${classId}`))
+    .catch(err => console.log(err))
+})
+
 module.exports = router;

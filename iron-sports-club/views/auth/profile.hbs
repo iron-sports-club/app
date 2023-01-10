@@ -1,6 +1,6 @@
 <h1>Profile</h1>
 
-<h1>Hey {{fullName}}</h1>
+<h1>Hey {{foundUser.fullName}}</h1>
 
 <button>
     <a href="/classes/list">Browse classes</a>
@@ -32,7 +32,7 @@
     <h3>{{this.className}}</h3>
     <p>{{this.description}}</p>
     <button>
-        <a href="/classes/{{_id}}">See class details</a>
+        <a href="/classes/{{_id}}/class-details">See class details</a>
     </button>
 </div>
 {{/each}}
