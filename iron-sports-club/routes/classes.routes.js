@@ -23,12 +23,24 @@ router.get("/classes/create-class", isInstructor,  (req, res, next) => {
 router.post("/classes/create-class", (req, res) => {
   const { className, duration, date, timeOfDay, description } = req.body;
   const ownerId = req.session.currentUser._id
-  Class.create({ className, duration, date, timeOfDay, description, owner: ownerId }) 
-  .then(createdClass => {
-    return User.findByIdAndUpdate(req.session.currentUser._id, { $push: {classes: createdClass._id}}); // 
+//   Class.create({ className, duration, date, timeOfDay, description, owner: ownerId }) 
+//   .then(createdClass => {
+//     return User.findByIdAndUpdate(req.session.currentUser._id, { $push: {classes: createdClass._id}}); // 
+//     })
+//     .then(() => res.redirect("/classes/list"))
+//     .catch((err) => console.log(err));
+
+Class.create({ className, duration, date, timeOfDay, description, owner: ownerId }) 
+.then(newClass => {
+    User.findById(ownerId)
+    .then(classInstructor => {
+        classInstructor.classes.push(newClass._id)
+        classInstructor.save()
     })
-    .then(() => res.redirect("/classes/list"))
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err))
+})
+.then(() => res.redirect("/classes/list"), newClass)
+        .catch(err => console.log(err));
 });
 
 router.get("/classes/:id/edit-class", isInstructor, (req, res, next) => {
