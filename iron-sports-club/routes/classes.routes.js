@@ -3,6 +3,7 @@ const router = express.Router();
 const Class = require("../models/Class.model");
 
 const {isStudent, isInstructor} = require("../middleware/route-guard");
+const User = require("../models/User.model");
 
 router.get("/classes/list", (req, res) => {
   Class.find()
@@ -20,7 +21,11 @@ router.get("/classes/create-class", isInstructor,  (req, res, next) => {
 
 router.post("/classes/create-class", (req, res) => {
   const { className, duration, date, timeOfDay, description } = req.body;
+/*   const {userId} = req.session.currentUser; */
   Class.create({ className, duration, date, timeOfDay, description })
+    // .then(createdClass => {
+    //   return User.findByIdAndUpdate(userId, { $push: {classes: createdClass._id}});
+    // })
     .then(() => res.redirect("/classes/list"))
     .catch((err) => console.log(err));
 });
