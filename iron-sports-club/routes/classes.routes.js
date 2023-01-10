@@ -46,12 +46,6 @@ router.get("/classes/create-class", isInstructor,  (req, res, next) => {
 router.post("/classes/create-class", (req, res) => {
   const { className, duration, date, timeOfDay, description } = req.body;
   const ownerId = req.session.currentUser._id
-//   Class.create({ className, duration, date, timeOfDay, description, owner: ownerId }) 
-//   .then(createdClass => {
-//     return User.findByIdAndUpdate(req.session.currentUser._id, { $push: {classes: createdClass._id}}); // 
-//     })
-//     .then(() => res.redirect("/classes/list"))
-//     .catch((err) => console.log(err));
 
 Class.create({ className, duration, date, timeOfDay, description, owner: ownerId }) 
 .then(newClass => {
@@ -98,22 +92,11 @@ router.post('/classes/:id/delete', isInstructor, (req, res, next) => {
                     currentUser.save()
                     
                 })
-                // .then(() => res.redirect('/classes/list'))
                 .catch(err => console.log(err))
         })
         Class.findByIdAndDelete(id)
         .then(() => res.redirect('/classes/list'))
 
-
-    // Class.findById(id)
-    //     .then((foundClass) => {
-    //         const classIndex = req.session.currentUser.classes.indexOf(foundclass._id)
-    //         req.session.currentUser.classes.splice(classIndex, 1)  //here the user needs to be found to change DB entry
-    //     })
-  
-    // Class.findByIdAndDelete(id)
-    //     .then(() => res.redirect('/classes/list'))
-    //     .catch(err => console.log(err))
   });
 
 router.post("/classes/:id/book-class", isStudent, (req, res, next) => {
@@ -150,9 +133,6 @@ router.post("/classes/:id/cancel-class", isStudent, (req, res, next) => {
                     currentUser.classes.splice(classIndex._id, 1)
                     currentUser.save()
                 })
-
-            // const bookedClassIndex = req.session.currentUser.classes.indexOf(foundClass._id) //here the user needs to be found to change DB entry
-            // req.session.currentUser.classes.splice(bookedClassIndex, 1)
         })
         .then(res.redirect(`/classes/${id}/class-details`))
     .catch(err => console.log(err))
