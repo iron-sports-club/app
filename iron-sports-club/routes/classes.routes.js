@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Class = require("../models/Class.model");
+const User = require("../models/User.model");
+
 
 const {isStudent, isInstructor} = require("../middleware/route-guard");
 const User = require("../models/User.model");
@@ -21,11 +23,11 @@ router.get("/classes/create-class", isInstructor,  (req, res, next) => {
 
 router.post("/classes/create-class", (req, res) => {
   const { className, duration, date, timeOfDay, description } = req.body;
-/*   const {userId} = req.session.currentUser; */
-  Class.create({ className, duration, date, timeOfDay, description })
-    // .then(createdClass => {
-    //   return User.findByIdAndUpdate(userId, { $push: {classes: createdClass._id}});
-    // })
+  const ownerId = req.session.currentUser._id
+  Class.create({ className, duration, date, timeOfDay, description, owner: ownerId }) 
+  .then(createdClass => {
+    return User.findByIdAndUpdate(req.session.currentUser._id, { $push: {classes: createdClass._id}}); // 
+    })
     .then(() => res.redirect("/classes/list"))
     .catch((err) => console.log(err));
 });
