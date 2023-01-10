@@ -62,6 +62,5 @@ module.exports = {
     isLoggedIn,
     isLoggedOut,
     isInstructor,
-    isStudent,
-    isOwner
+    isStudent
   };

@@ -3,11 +3,12 @@
 <p>{{foundClass.className}}</p>
 <p>{{foundClass.description}}</p>
 {{#if isInstructor}}
+  {{#if isOwner}}
 <a href="/classes/{{foundClass._id}}/edit-class"><button>Edit</button></a>
 <form action="/classes/{{foundClass._id}}/delete" method="post">
     <button type="submit">Delete</button>
 </form>
-
+  {{/if}}
 {{else}}
     <form action="/classes/{{foundClass._id}}/cancel-class" method="post">
         <button type="submit">Cancel Class</button>
@@ -17,3 +18,4 @@
       </form>
 
 {{/if}}
+
