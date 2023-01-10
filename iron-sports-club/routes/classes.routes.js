@@ -5,7 +5,7 @@ const User = require("../models/User.model");
 
 
 const {isStudent, isInstructor} = require("../middleware/route-guard");
-const User = require("../models/User.model");
+
 
 router.get("/classes/list", (req, res) => {
   Class.find()
@@ -37,11 +37,13 @@ Class.create({ className, duration, date, timeOfDay, description, owner: ownerId
     .then(classInstructor => {
         classInstructor.classes.push(newClass._id)
         classInstructor.save()
+        console.log("newClass", newClass)
+        console.log("classInstructor.classes", classInstructor.classes)
     })
     .catch(err => console.log(err))
-})
-.then(() => res.redirect("/classes/list"), newClass)
+  .then(() => res.redirect("/auth/profile"))
         .catch(err => console.log(err));
+      })
 });
 
 router.get("/classes/:id/edit-class", isInstructor, (req, res, next) => {

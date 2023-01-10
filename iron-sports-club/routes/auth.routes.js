@@ -89,7 +89,10 @@ router.post("/auth/login", (req, res) => {
 
 router.get("/auth/profile", isLoggedIn, (req, res, next) => {
     const {fullName, role, classes} = req.session.currentUser
-    console.log(req.session.currentUser.classes)
+    console.log(req.session)
+    console.log("Current instructor: ", req.session.currentUser.fullName)
+    console.log("Classes created by current instructor: ", req.session.currentUser.classes[0])
+    
     if(req.session.currentUser.role === "Instructor"){
     res.render("auth/profile", {isInstructor: true, fullName, classes, role}) //req.session.currentUser, 
     } else {
