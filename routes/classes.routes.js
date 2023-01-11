@@ -112,6 +112,20 @@ router.post('/classes/:id/delete', isInstructor, (req, res, next) => {
                     currentUser.save()
                     
                 })
+            
+            User.find(foundClass._id)
+            .then((listOfAttendees) => {
+              console.log("LIST OF USERS ===>", listOfAttendees)
+              listOfAttendees.forEach((singleAttendee) => {
+                User.findById(singleAttendee._id)
+                  .then ((foundSingleAttendee) => {
+                    classIndex= foundSingleAttendee.classes.indexOf(foundClass._id)
+                    foundSingleAttendee.classes.splice(classIndex._id, 1)
+                    foundSingleAttendee.save()
+                  }) 
+              })
+            })
+
                 .catch(err => console.log(err))
         })
         Class.findByIdAndDelete(id)
