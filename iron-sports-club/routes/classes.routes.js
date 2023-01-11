@@ -95,7 +95,7 @@ router.post("/classes/:id/edit-class", (req, res) => {
   const { id } = req.params;  
   console.log("Parameeters: ",req.params);
   Class.findByIdAndUpdate(id, { className, duration, date, timeOfDay, description })
-    .then(() => res.redirect("/classes/list"))
+    .then(() => res.redirect("/auth/profile"))
     .catch((err) => console.log(err));
 });
 
@@ -115,7 +115,7 @@ router.post('/classes/:id/delete', isInstructor, (req, res, next) => {
                 .catch(err => console.log(err))
         })
         Class.findByIdAndDelete(id)
-        .then(() => res.redirect('/classes/list'))
+        .then(() => res.redirect('/auth/profile'))
 
   });
 
