@@ -1,12 +1,46 @@
-<h1>Edit class Page</h1>
+<h1>Edit class</h1>
 
 <form action="/classes/{{id}}/edit-class" method="post">
     
-    <input type="text" name="className" value={{className}} required>
+    {{!-- <input type="text" name="className" value={{className}} required>
     <input type="number" name="duration" value={{duration}} required>
     <input type="date" name="date" value={{date}} required>
     <input type="time" name="timeOfDay" value={{timeOfDay}} required>
-    <input type="text" name="description" value={{description}} required>
+    <input type="text" name="description" value={{description}} required> --}}
     {{!-- <input type="hidden" name="userId" value="{{id}}"> this is to refer to the owner ID --}}
-    <button type="submit">Edit Class</button>
+    {{!-- <button type="submit">Edit Class</button>
+</form> --}}
+
+<form action="/classes/{{id}}/edit-class" method="post">
+  <div class="mb-3">
+    <label for="className" class="form-label">Class name
+    <input type="text" name="className" class="form-control" id="className" aria-describedby="emailHelp" value={{className}} required>
+    </label>
+  </div>
+  <div class="mb-3">
+    <label for="duration" class="form-label">Class duration
+    <input type="number" name="duration" class="form-control" id="duration" value={{duration}} required>
+    </label>
+  </div>
+    <div class="mb-3">
+    <label for="date" class="form-label">Date
+    <input type="date" name="date" class="form-control" id="date" value={{date}} required>
+    </label>
+  </div>
+    <div class="mb-3">
+    <label for="timeOfDay" class="form-label">Time of day
+    <input type="time" name="timeOfDay" class="form-control" id="timeOfDay" value={{timeOfDay}} required>
+    </label>
+  </div>
+    <div class="mb-3">
+    <label for="description" class="form-label">Description
+    <input type="text" name="description" class="form-control" id="description" value={{description}} required>
+    </label>
+  </div>
+    <div class="mb-3">
+    <label for="uploadImage" class="form-label">Edit image
+    <input type="file" name="class-cover-image" class="form-control" id="uploadImage" value={{image}} required>
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Edit class</button>
 </form>

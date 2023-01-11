@@ -1,12 +1,51 @@
-<h1>Create a class Page</h1>
 
-<form action="/classes/create-class" method="post">
+
+{{!-- <form action="/classes/create-class" method="post">
     
     <input type="text" name="className" placeholder="Enter your class name..." required>
     <input type="number" name="duration" placeholder="Enter your class duration..." required>
     <input type="date" name="date" required>
     <input type="time" name="timeOfDay" required>
-    <input type="text" name="description" placeholder="Enter your description..." required>
+    <input type="text" name="description" placeholder="Enter your description..." required> --}}
     {{!-- <input type="hidden" name="userId" value="{{id}}"> this is to refer to the owner ID --}}
-    <button type="submit">Create Class</button>
+    {{!-- <button type="submit">Create Class</button>
+</form> --}}
+
+<h1>Create a class</h1>
+
+<form action="/classes/create-class" enctype="multipart/form-data" method="post">
+  <div class="mb-3">
+    <label for="className" class="form-label">Class name
+    <input type="text" name="className" class="form-control" id="className" aria-describedby="emailHelp" placeholder="Enter your class name..." required>
+    </label>
+  </div>
+  <div class="mb-3">
+    <label for="duration" class="form-label">Class duration
+    <input type="number" name="duration" class="form-control" id="duration" placeholder="Enter your class duration..." required>
+    </label>
+  </div>
+    <div class="mb-3">
+    <label for="date" class="form-label">Date
+    <input type="date" name="date" class="form-control" id="date" required>
+    </label>
+  </div>
+    <div class="mb-3">
+    <label for="timeOfDay" class="form-label">Time of day
+    <input type="time" name="timeOfDay" class="form-control" id="timeOfDay" required>
+    </label>
+  </div>
+    <div class="mb-3">
+    <label for="description" class="form-label">Description
+    <input type="text" name="description" class="form-control" id="description" required>
+    </label>
+  </div>
+    <div class="mb-3">
+    <label for="uploadImage" class="form-label">Upload image
+    <input type="file" name="class-cover-image" class="form-control" id="uploadImage" required>
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Create class</button>
 </form>
+
+{{!-- <input type=“file” name=“class-cover-image” /> --}}
+
