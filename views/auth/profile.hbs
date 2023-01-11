@@ -1,17 +1,15 @@
-<h1>Profile</h1>
-
 <h1>Hey {{foundUser.fullName}}</h1>
 
-<button>
-    <a href="/classes/list">Browse classes</a>
-</button>
+
+    <a class="btn btn-dark" href="/classes/list">Browse classes</a>
+
 
 {{#if isInstructor}}
-<button>
-    <a href="/classes/create-class">Create new class</a>
-</button>
-{{/if}}
 
+    <a class="btn btn-dark" href="/classes/create-class">Create new class</a>
+
+{{/if}}
+<br></br>
 {{!-- change title based on user role --}}
 {{#if isInstructor}}
 
@@ -25,14 +23,27 @@
     </h2>
 {{/if}}
 
-{{!-- Displaying all classes for both Instructor and Student user role --}}
-{{#each foundUser.classes}} 
-{{!-- these need to be the classes that are associated with that user! --}}
-<div>
-    <h3>{{this.className}}</h3>
-    <p>{{this.description}}</p>
-    <button>
-        <a href="/classes/{{_id}}/class-details">See class details</a>
-    </button>
+
+
+
+<div class="row">
+{{#each foundUser.classes}}
+<div class="col-sm-3">
+
+<div class="card" style="width: 18rem;">
+  <img src="https://thumbs.dreamstime.com/b/web-156637519.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{this.className}}</h5>
+    <p class="card-text">{{this.description}}</p>
+     <p class="card-text"><b>Duration:</b> {{this.duration}} min</p>
+    <p class="card-text"><b>Date:</b> {{this.date}}</p>
+        <p class="card-text"><b>Attendees:</b> {{this.attendees.length}}</p>
+
+
+    <a href="/classes/{{_id}}/class-details" class="btn btn-primary">View details</a>
+  </div>
 </div>
+</div>
+
 {{/each}}
+</div>
