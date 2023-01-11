@@ -10,7 +10,7 @@ const {isLoggedIn, isLoggedOut, isStudent, isInstructor} = require("../middlewar
 
 // GET Signup
 router.get("/auth/signup", isLoggedOut, (req, res, next) => {
-    res.render("auth/signup")
+    res.render("auth/signup", {isLoggedOut: true})
 })
 
 
@@ -39,7 +39,7 @@ router.post("/auth/signup", async (req, res) => {
 
 // GET Login
 router.get("/auth/login", isLoggedOut, (req, res, next) => {
-    res.render("auth/login")
+    res.render("auth/login", {isLoggedOut: true})
 })
 
 
@@ -98,7 +98,7 @@ User.findOne({ fullName })
         .then( foundUser => {
             console.log("user:", foundUser)
             console.log("user's classes:", foundUser.classes)
-            res.render("auth/profile", {isInstructor: true, foundUser})
+            res.render("auth/profile", {isInstructor: true, foundUser, isLoggedIn: true})
         })
         .catch(error => console.log(error))
 } else {
@@ -107,7 +107,7 @@ User.findOne({ fullName })
     .populate("classes")
     .then( foundUser => {
         console.log("user:", foundUser)
-        res.render("auth/profile", {isInstructor: false, foundUser})
+        res.render("auth/profile", {isInstructor: false, foundUser, isLoggedIn: true})
     })
     .catch(error => console.log(error))
 }

@@ -11,14 +11,20 @@
   <body>
     <ul>
       <li><a href="/">Home</a></li>
-      <li><a href="/classes/list">Classes</a></li>
+       {{#if isLoggedOut}}
       <li><a href="/auth/signup">Signup</a></li>
       <li><a href="/auth/login">Login</a></li>
+      {{/if}}
+      <li><a href="/classes/list">Classes</a></li>
+      {{#if isLoggedIn}}
+      <li><a href="/auth/profile">Profile</a></li>
+     
       <li>
         <form action="/logout" method="post">
           <button type="submit">Logout</button>
         </form>
       </li>
+       {{/if}}
     </ul>
     {{{body}}}
 
