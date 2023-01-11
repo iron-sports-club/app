@@ -13,7 +13,7 @@ module.exports = app => {
         resave: true,
         saveUninitialized: true,
         store: MongoStore.create({ 
-          mongoUrl: 'mongodb://127.0.0.1:27017/iron-sports-club',
+          mongoUrl: process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/iron-sports-club',
           ttl: 24 * 60 * 60 // 1 day
       }),
         cookie: {
