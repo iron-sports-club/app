@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Class = require("../models/Class.model");
 const User = require("../models/User.model");
+const fileUploader = require('../config/cloudinary.config');
+
 
 
 const {isStudent, isInstructor} = require("../middleware/route-guard");
@@ -63,11 +65,12 @@ router.get("/classes/create-class", isInstructor,  (req, res, next) => {
   res.render("classes/create-class");
 });
 
-router.post("/classes/create-class", (req, res) => {
+router.post("/classes/create-class", fileUploader.single('class-cover-image'), (req, res) => {
   const { className, duration, date, timeOfDay, description } = req.body;
   const ownerId = req.session.currentUser._id
+  
 
-Class.create({ className, duration, date, timeOfDay, description, owner: ownerId }) 
+Class.create({ className, duration, date, timeOfDay, description, owner: ownerId, image: req.file.path}) 
 .then(newClass => {
     User.findById(ownerId)
     .then(classInstructor => {

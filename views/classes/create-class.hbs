@@ -1,12 +1,13 @@
 <h1>Create a class Page</h1>
 
-<form action="/classes/create-class" method="post">
+<form action="/classes/create-class" method="post" enctype="multipart/form-data">
     
     <input type="text" name="className" placeholder="Enter your class name..." required>
     <input type="number" name="duration" placeholder="Enter your class duration..." required>
     <input type="date" name="date" required>
     <input type="time" name="timeOfDay" required>
     <input type="text" name="description" placeholder="Enter your description..." required>
+    <input type="file" name="class-cover-image" />
     {{!-- <input type="hidden" name="userId" value="{{id}}"> this is to refer to the owner ID --}}
     <button type="submit">Create Class</button>
 </form>

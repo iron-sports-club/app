@@ -18,9 +18,8 @@ const classSchema = new Schema ({
         type: String,
         required: true
     },
-    defaultIcon: {
+    image: {
         type: String,
-        default: "./public/images/default-cllass-icon.jpg.jpg"
     },
     description: {
         type: String
