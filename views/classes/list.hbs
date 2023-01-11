@@ -1,7 +1,32 @@
+<h1>List of available classes</h1>
+<div class="row">
 {{#each classes}}
+<div class="col-sm-3">
+
+<div class="card" style="width: 18rem;">
+  <img src="https://thumbs.dreamstime.com/b/web-156637519.jpg" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{className}}</h5>
+    <p class="card-text">{{description}}</p>
+     <p class="card-text"><b>Duration:</b> {{duration}} min</p>
+    <p class="card-text"><b>Date:</b> {{date}}</p>
+        <p class="card-text"><b>Attendees:</b> {{attendees.length}}</p>
+
+
+    <a href="/classes/{{_id}}/class-details" class="btn btn-primary">View details</a>
+  </div>
+</div>
+</div>
+
+{{/each}}
+</div>
+
+
+
+{{!-- {{#each classes}}
 <p>{{className}}</p>
 <button>       
      <a href="/classes/{{_id}}/class-details">See class details</a>
 </button>
 
-{{/each}}
+{{/each}} --}}
