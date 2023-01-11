@@ -9,10 +9,18 @@ const fileUploader = require('../config/cloudinary.config');
 const {isStudent, isInstructor} = require("../middleware/route-guard");
 
 router.get("/classes/list", (req, res) => {
+
   Class.find()
     .then((classes) => {
       console.log("classes from DB: ", { classes });
-      res.render("classes/list", { classes });
+
+      if(req.session.currentUser){
+
+
+      res.render("classes/list", { classes , isLoggedIn:true});
+    } else {
+      res.render("classes/list", { classes, isLoggedOut:true });
+    }
     })
 
     .catch((err) => console.log(err));
