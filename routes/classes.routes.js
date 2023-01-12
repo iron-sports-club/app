@@ -19,7 +19,7 @@ router.get("/classes/list", (req, res) => {
 
       res.render("classes/list", { classes , isLoggedIn:true});
     } else {
-      res.render("classes/list", { classes, isLoggedOut:true });
+      res.render("classes/list", { classes, isLoggedOut:true});
     }
     })
 
@@ -56,10 +56,10 @@ router.get("/classes/:id/class-details", (req, res, next) => {
           User.findById(foundClass.owner.toString())
             .then((foundClassInstructor) => {
             if(currentUser.classes.includes(foundClass._id.toString())) {
-                res.render("classes/class-details", {isInstructor: false, foundClass, isBooked: true, foundClassInstructor});
+                res.render("classes/class-details", {isInstructor: false, foundClass, isBooked: true, foundClassInstructor, isLoggedIn:true});
     
             } else {
-                res.render("classes/class-details", {isInstructor: false, foundClass, isNotBooked: true, foundClassInstructor});
+                res.render("classes/class-details", {isInstructor: false, foundClass, isNotBooked: true, foundClassInstructor, isLoggedIn:true});
     
             }
             })

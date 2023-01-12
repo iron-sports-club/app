@@ -12,8 +12,13 @@
     <p class="card-text"><b>Date:</b> {{date}}</p>
         <p class="card-text"><b>Attendees:</b> {{attendees.length}}</p>
 
-
+{{#if isLoggedIn}}
     <a href="/classes/{{_id}}/class-details" class="btn btn-primary">View details</a>
+    {{/if}}
+
+    {{#if isLoggedOut}}
+    <a href="/" class="btn btn-primary">Login or Sign</a>
+    {{/if}}
   </div>
 </div>
 </div>
@@ -29,3 +34,5 @@
 </button>
 
 {{/each}} --}}
+
+ 
