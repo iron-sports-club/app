@@ -24,11 +24,19 @@ const userSchema = new Schema(
         required: true,
         enum: ["Instructor", "Student"]
       },
+      aboutInstructor: {
+        type: String,
+      },
+      startedInstructing: {
+        type: String,
+      },
+      imageUrl: {
+        type: String
+      },
 
       classes: [{ type: Schema.Types.ObjectId, ref: "Class" }]
     },
     {
-      // this second object adds extra properties: `createdAt` and `updatedAt`
       timestamps: true
     }
   );

@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt")
 const express = require("express")
 const router = express.Router()
-
+const fileUploader = require('../config/cloudinary.config');
 const User = require("../models/User.model")
 const saltRounds = 10
 
@@ -15,22 +15,29 @@ router.get("/auth/signup", isLoggedOut, (req, res, next) => {
 
 
 // POST Signup
-router.post("/auth/signup", async (req, res) => {
-    const { fullName, email, password, role } = req.body
+router.post("/auth/signup", fileUploader.single('instructor-cover-image'), async (req, res) => {
+    const { fullName, email, password, role, aboutInstructor, startedInstructing} = req.body
+    
     console.log("REQ.BODY ===>", req.body)
+   console.log("REQ.FILE ===>", req.file)
+
+   //Setting imageUrl to empty string if no image is given
+const filePath = req.file !== undefined ? req.file.path : '';
 
     //unsuccessful Signup
     if (!fullName || !email || !password || !role) {
-        res.render("auth/signup", { errorMessage: "All fields have to be filled. Please provide your full name, email, password and role."})
+        res.render("auth/signup", { errorMessage: "You missed mandatory fields. Please provide your full name, email, password and role."})
         return
     }
+
 
     //successful Signup
     const passwordHash = await bcrypt.hash(password, saltRounds)
 
-    User.create({ fullName, email, password: passwordHash, role })
+
+    User.create({ fullName, email, password: passwordHash, role, aboutInstructor, startedInstructing, imageUrl: filePath})
         .then((newUser) => {            
-            req.session.currentUser = {fullName: newUser.fullName, role: newUser.role, classes: newUser.classes, _id: newUser._id}
+            req.session.currentUser = {fullName: newUser.fullName, role: newUser.role, classes: newUser.classes, _id: newUser._id, aboutInstructor: newUser.aboutInstructor, startedInstructing: newUser.startedInstructing, imageUrl: newUser.imageUrl}
             res.redirect("/auth/profile")
         })
         .catch(err => console.log(err))
@@ -79,14 +86,6 @@ router.post("/auth/login", (req, res) => {
 })
 
 
-// GET Profile
-// router.get("/auth/profile", isLoggedIn, (req, res, next) => {
-//     console.log("CURRENT USER ROLE ===>", req.session.currentUser.role)
-
-//     console.log("CURRENT USER ===>", req.session.currentUser)
-//     res.render("auth/profile", req.session.currentUser)
-// })
-
 router.get("/auth/profile", isLoggedIn, (req, res, next) => {
     const {fullName, role, classes} = req.session.currentUser
     console.log(req.session.currentUser.classes)
@@ -102,7 +101,6 @@ User.findOne({ fullName })
         })
         .catch(error => console.log(error))
 } else {
-    // res.render("auth/profile", {isInstructor: false, fullName, classes, role})
     User.findOne({ fullName })
     .populate("classes")
     .then( foundUser => {
@@ -111,7 +109,6 @@ User.findOne({ fullName })
     })
     .catch(error => console.log(error))
 }
-    
     })
 
 

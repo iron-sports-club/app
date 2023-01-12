@@ -20,10 +20,27 @@ const classSchema = new Schema ({
     },
     image: {
         type: String,
+        required: true
     },
     description: {
-        type: String
+        type: String,
+        required: true
     },
+    //NEW STUFF FOR CLASS DETAIL PAGE
+    location: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    neededEquipment: {
+        type: String,
+        required: true
+    },
+    //NEW STUFF FOR CLASS DETAIL PAGE
+
     owner: {type: Schema.Types.ObjectId, ref: "Instructor"},
     attendees: [{ type: Schema.Types.ObjectId, ref: "Student" }]
 })
