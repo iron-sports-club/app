@@ -38,7 +38,7 @@ router.get("/classes/:id/class-details", (req, res, next) => {
   Class.findById(id)
     .then((foundClass) => {
 
-        User.findById(req.session.currentUser._id)
+        User.findById(foundClass.owner.toString()) //req.session.currentUser._id
         .then((foundClassInstructor) => {
 
         if (foundClass.owner.toString() === req.session.currentUser._id) {
