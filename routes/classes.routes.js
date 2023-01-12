@@ -37,9 +37,9 @@ router.get("/classes/:id/class-details", (req, res, next) => {
         .then((foundClassInstructor) => {
 
         if (foundClass.owner.toString() === req.session.currentUser._id) {
-          res.render("classes/class-details", {isInstructor: true, foundClass, isOwner: true, foundClassInstructor});
+          res.render("classes/class-details", {isInstructor: true, foundClass, isOwner: true, foundClassInstructor, isLoggedIn:true});
         } else {
-          res.render("classes/class-details", {isInstructor: true, foundClass, foundClassInstructor});
+          res.render("classes/class-details", {isInstructor: true, foundClass, foundClassInstructor, isLoggedIn:true});
         } 
     })
   })
@@ -72,7 +72,7 @@ router.get("/classes/:id/class-details", (req, res, next) => {
 });
 
 router.get("/classes/create-class", isInstructor,  (req, res, next) => {
-  res.render("classes/create-class");
+  res.render("classes/create-class", {isLoggedIn:true} );
 });
 
 router.post("/classes/create-class", fileUploader.single('class-cover-image'), (req, res) => {
