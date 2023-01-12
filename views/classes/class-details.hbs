@@ -44,7 +44,19 @@
       <form action="/classes/{{foundClass._id}}/book-class" method="post">
         <button type="submit">Book Class</button>
       </form>
-{{/if}}  </div>
+{{/if}}  
+
+{{#if isOwner}}
+      <form action="/classes/{{foundClass._id}}/edit-class" method="get">
+        <button class="btn btn-primary" type="submit">Edit Class</button>
+      </form>
+
+            <form action="/classes/{{foundClass._id}}/delete-class" method="post">
+        <button class="btn btn-primary" type="submit">Delete Class</button>
+      </form>
+{{/if}}
+
+</div>
 
 
 
