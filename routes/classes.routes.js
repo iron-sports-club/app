@@ -15,11 +15,16 @@ router.get("/classes/list", (req, res) => {
       console.log("classes from DB: ", { classes });
 
       if(req.session.currentUser){
-
-
-      res.render("classes/list", { classes , isLoggedIn:true});
+      const updateClasses = classes.map((singleClass) => {
+        return {...singleClass._doc, isLoggedIn: true}
+      })
+        console.log("UPDATE CLASSES ===>", updateClasses)
+      res.render("classes/list", { classes: updateClasses, isLoggedIn:true});
     } else {
-      res.render("classes/list", { classes, isLoggedOut:true});
+      const updateClasses = classes.map((singleClass) => {
+        return {...singleClass._doc, isLoggedIn: false}
+      })
+      res.render("classes/list", { classes:updateClasses, isLoggedOut:true});
     }
     })
 
