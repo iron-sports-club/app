@@ -9,22 +9,41 @@
       <img src="images/outdoor.jpeg" class="d-block w-100" alt="outdoor fitness">
  
       <div class="carousel-caption d-none d-md-block">
-           <h1>Iron Sports Club</h1>
-        <h5>The app for all your fitness needs</h5>
-        <p>sign up as a student to book and attend fitness classes!</p>
+           <h1 style="color:black">Iron Sports Club</h1>
+        
+
+{{#if isLoggedOut}}
+<h5 style="color:black">The app for all your fitness needs</h5>
+        <p style="color:black">Sign up to offer or book classes!</p>
+
           <a class="btn btn-primary" href="/auth/signup">Signup</a>
           <a class="btn btn-primary" href="/auth/login">Login</a>
+
+  {{else}}
+  <h5 style="color:black">Manage your classes from your profile or browse through all offers.</h5>
+     <a class="btn btn-primary" href="/auth/profile">See your profile</a>
+          <a class="btn btn-primary" href="/classes/list">Browse classes</a>
+
+{{/if}}
       </div>
     </div>
     <div class="carousel-item">
       <img src="images/yoga.jpeg" class="d-block w-100" alt="yoga">
       <div class="carousel-caption d-none d-md-block">
-                <h1>Iron Sports Club</h1>
-        <h5>Become an instructor and easily manage your classes</h5>
-        <p>Sign up as an instructor to create and manage your classes!</p>
+                <h1 style="color:black">Iron Sports Club</h1>
+<h5 style="color:black">The app for all your fitness needs</h5>
+        <p style="color:black">Sign up to offer or book classes!</p>
+
+{{#if isLoggedOut}}
         <a class="btn btn-primary" href="/auth/signup">Signup</a>
           <a class="btn btn-primary" href="/auth/login">Login</a>
+     {{else}}
+     <a class="btn btn-primary" href="/auth/profile">See your profile</a>
+          <a class="btn btn-primary" href="/classes/list">Browse classes</a>
      
+     {{/if}}
+
+
       </div>
     </div>
   </div>
