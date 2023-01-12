@@ -28,7 +28,10 @@
 {{#each foundUser.classes}}
 <div class="col-sm-3">
 
-<div class="card" style="width: 18rem;">
+{{!-- style="width: 18rem;" --}} 
+
+<div class="card" style="width: 100%; height: 15vw; object-fit:cover">  
+
   <img src="{{this.image}}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">{{this.className}}</h5>
@@ -36,7 +39,6 @@
      <p class="card-text"><b>Duration:</b> {{this.duration}} min</p>
     <p class="card-text"><b>Date:</b> {{this.date}}</p>
         <p class="card-text"><b>Attendees:</b> {{this.attendees.length}}</p>
-
 
     <a href="/classes/{{_id}}/class-details" class="btn btn-primary">View details</a>
   </div>
