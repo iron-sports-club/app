@@ -25,8 +25,9 @@
 <div class="row">
 
 <div class="col-sm-3">
+  <h2>Class Details</h2>
 <div class="card" style="width: 18rem;">
-  <img src="{{foundClass.image}}" class="card-img-top" alt="...">
+  <img src="{{foundClass.image}}" style="width: 100%; height: 15vw; object-fit:cover" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">{{foundClass.className}}</h5>
     <p class="card-text">{{dfoundClass.description}}</p>
@@ -37,12 +38,12 @@
 
 {{#if isBooked}}
     <form action="/classes/{{foundClass._id}}/cancel-class" method="post">
-        <button type="submit">Cancel Class</button>
+        <button class="btn btn-primary" type="submit">Cancel Class</button>
 </form>
 {{/if}}
 {{#if isNotBooked}}
       <form action="/classes/{{foundClass._id}}/book-class" method="post">
-        <button type="submit">Book Class</button>
+        <button class="btn btn-primary" type="submit">Book Class</button>
       </form>
 {{/if}}  
 
@@ -64,19 +65,20 @@
 </div>
 
 <div class="col-sm-3">
-
+<h2>Your instructor</h2>
 <div class="card" style="width: 18rem;">
-  <img src="{{foundClassInstructor.imageUrl}}" class="card-img-top" alt="...">
+  <img src="{{foundClassInstructor.imageUrl}}" style="width: 100%; height: 15vw; object-fit:cover" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">{{foundClassInstructor.fullName}}</h5>
     <p class="card-text"><b>Instructiong since:</b> {{foundClassInstructor.startedInstructing}}</p>
-    <p class="card-text"><b>Meet your instructor:</b> {{foundClassInstructor.aboutInstructor}}</p>
+    <p class="card-text"><i>{{foundClassInstructor.aboutInstructor}}</i></p>
 
 </div>
 </div>
 </div>
 
 <div class="col-sm-6">
+  <h2>The location</h2>
 {{{foundClass.location}}}
 </div>
 
