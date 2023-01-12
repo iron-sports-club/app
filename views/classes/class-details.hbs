@@ -1,5 +1,5 @@
 <h1>class details Page</h1>
-
+{{!-- 
 <p>{{foundClass.className}}</p>
 <p>{{foundClass.description}}</p>
 {{#if isInstructor}}
@@ -20,4 +20,54 @@
         <button type="submit">Book Class</button>
       </form>
 {{/if}}
+{{/if}} --}}
+
+
+<div class="row">
+
+<div class="col-sm-3">
+<div class="card" style="width: 18rem;">
+  <img src="{{foundClass.image}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{foundClass.className}}</h5>
+    <p class="card-text">{{dfoundClass.description}}</p>
+     <p class="card-text"><b>Duration:</b> {{foundClass.duration}} min</p>
+    <p class="card-text"><b>Date:</b> {{foundClass.date}}</p>
+        <p class="card-text"><b>Attendees:</b> {{foundClass.attendees.length}}</p>
+
+
+{{#if isBooked}}
+    <form action="/classes/{{foundClass._id}}/cancel-class" method="post">
+        <button type="submit">Cancel Class</button>
+</form>
 {{/if}}
+{{#if isNotBooked}}
+      <form action="/classes/{{foundClass._id}}/book-class" method="post">
+        <button type="submit">Book Class</button>
+      </form>
+{{/if}}  </div>
+
+
+
+</div>
+</div>
+
+<div class="col-sm-3">
+
+<div class="card" style="width: 18rem;">
+  <img src="{{foundClassInstructor.imageUrl}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{foundClassInstructor.fullName}}</h5>
+    <p class="card-text"><b>Instructiong since:</b> {{foundClassInstructor.startedInstructing}}</p>
+    <p class="card-text"><b>Meet your instructor:</b> {{foundClassInstructor.aboutInstructor}}</p>
+
+</div>
+</div>
+</div>
+
+<div class="col-sm-6">
+{{{foundClass.location}}}
+</div>
+
+</div>
+
