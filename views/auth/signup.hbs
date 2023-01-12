@@ -4,16 +4,16 @@
 <form action="/auth/signup" enctype="multipart/form-data" method="POST">
 <div class="mb-3">
     <label for="fullName" class="form-label">Full Name</label>
-    <input type="text" name="fullName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <input type="text" name="fullName" placeholder="Enter your full name..." class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
   </div>
   <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <input type="email" name="email" placeholder="Enter your email address..." class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
   </div>
   <div class="mb-3">
     <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+    <input type="password" placeholder="Enter your password..." name="password" class="form-control" id="exampleInputPassword1">
   </div>
 
   <div class="mb-3">
@@ -26,17 +26,23 @@
 
 <div class="mb-3">
     <label for="startedInstructing" class="form-label">Instructing since</label>
-    <input type="text" name="startedInstructing" class="form-control" id="exampleInputPassword1">
+    <input type="text" name="startedInstructing" class="form-control" id="exampleInputPassword1" placeholder="The year you started instructing">
+    <div id="emailHelp" class="form-text">Only to be filled out by instructors.</div>
+
   </div>
 
 <div class="mb-3">
     <label for="aboutInstructor" class="form-label">About me</label>
-    <input type="text" name="aboutInstructor" class="form-control" id="exampleInputPassword1">
+    <input type="text" name="aboutInstructor" class="form-control" id="exampleInputPassword1" placeholder="Tell your students a bit about yourself">
+    <div id="emailHelp" class="form-text">Only to be filled out by instructors.</div>
+
   </div>
 
 <label for="uploadImage" class="form-label">Upload image
     <input type="file" name="instructor-cover-image" class="form-control" id="uploadImage">
     </label>
+      <div id="emailHelp" class="form-text">Pictures are only required for instructors.</div>
+
   </div>
 
 
