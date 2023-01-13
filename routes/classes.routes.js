@@ -181,7 +181,7 @@ router.post("/classes/:id/cancel-class", isStudent, (req, res, next) => {
                     currentUser.save()
                 })
         })
-        .then(res.redirect(`/classes/${id}/class-details`))
+        .then(res.redirect(`/auth/profile`))
     .catch(err => console.log(err))
 })
 
