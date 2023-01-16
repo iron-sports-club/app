@@ -116,7 +116,7 @@ router.post("/classes/:id/edit-class", (req, res) => {
 });
 
 
-router.post('/classes/:id/delete', isInstructor, (req, res, next) => {
+router.post('/classes/:id/delete-class', isInstructor, (req, res, next) => {
     const { id } = req.params;
 
     Class.findById(id)
