@@ -116,7 +116,7 @@ router.post("/classes/:id/edit-class", (req, res) => {
 });
 
 
-router.post('/classes/:id/delete', isInstructor, (req, res, next) => {
+router.post('/classes/:id/delete-class', isInstructor, (req, res, next) => {
     const { id } = req.params;
 
     Class.findById(id)
@@ -181,7 +181,7 @@ router.post("/classes/:id/cancel-class", isStudent, (req, res, next) => {
                     currentUser.save()
                 })
         })
-        .then(res.redirect(`/auth/profile`))
+        .then(res.redirect(`/classes/${id}/class-details`))
     .catch(err => console.log(err))
 })
 
